@@ -14,7 +14,10 @@ export default function App() {
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="light-content" />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Lista">
+        <Stack.Navigator
+          initialRouteName="Lista"
+          screenOptions={{ headerShown: false }}
+        >
           <Stack.Screen name="Agregar" component={Agregar} />
           <Stack.Screen name="Editar" component={Editar} />
           <Stack.Screen name="Informacion" component={Informacion} />

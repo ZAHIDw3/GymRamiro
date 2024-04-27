@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput, Text, Button, ScrollView, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import appFirebase from './Credenciales';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
@@ -106,18 +104,21 @@ const handleSubmit = async () => {
   };
 
   // Función para renderizar los date pickers
-  const renderDatePicker = (name, formattedDate, showDatePicker, onChange) => (
-    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-      <Button title={formattedDate} onPress={() => onChange(true)} />
-      {showDatePicker && (
-        <DateTimePicker
-          testID={`dateTimePicker${name}`}
-          value={formData[name]}
-          mode="date"
-          display="spinner"
-          onChange={(event, selectedDate) => handleDateChange(event, selectedDate, name)}
-        />
-      )}
+  const renderDatePicker = (name, formattedDate, showDatePicker, onChange, labelText) => (
+    <View style={{ marginBottom: 10 }}>
+      <Text>{labelText}</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Button title={formattedDate} onPress={() => onChange(true)} />
+        {showDatePicker && (
+          <DateTimePicker
+            testID={`dateTimePicker${name}`}
+            value={formData[name]}
+            mode="date"
+            display="spinner"
+            onChange={(event, selectedDate) => handleDateChange(event, selectedDate, name)}
+          />
+        )}
+      </View>
     </View>
   );
 
@@ -187,10 +188,10 @@ const handleSubmit = async () => {
       />
 
       {/* Renderizado del date picker para la fecha de nacimiento */}
-      {renderDatePicker('fechaNacimiento', fechaNacimientoFormatted, showDatePickerNacimiento, setShowDatePickerNacimiento)}
+      {renderDatePicker('fechaNacimiento', fechaNacimientoFormatted, showDatePickerNacimiento, setShowDatePickerNacimiento, 'Fecha de Nacimiento:')}
 
       {/* Renderizado del date picker para la fecha de inicio */}
-      {renderDatePicker('fechaInicio', fechaInicioFormatted, showDatePickerInicio, setShowDatePickerInicio)}
+      {renderDatePicker('fechaInicio', fechaInicioFormatted, showDatePickerInicio, setShowDatePickerInicio, 'Fecha de Inicio:')}
 
       {/* Mostrar la fecha de término */}
       <Text>Fecha de término:</Text>
